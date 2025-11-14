@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salma Aulia Zahrani - Personal Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --text-dark: #f7fafc;
+            --text-light: #cbd5e0;
+            --bg-light: #1a202c;
+            --bg-white: #2d3748;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.1;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.3) 0%, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] nav {
+            background: rgba(45, 55, 72, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(118, 75, 162, 0.8)); }
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            margin: 3px 0;
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        .section-content {
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideInLeft 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* Home Section */
+        #home {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .home-text {
+            animation: slideInLeft 1s ease;
+        }
+
+        .home-text h3 {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .home-text p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .home-image {
+            position: relative;
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .profile-img {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .profile-img-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-img-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            z-index: -1;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .education-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: var(--transition);
+        }
+
+        .education-card:hover::before {
+            animation: shimmer 0.5s ease;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .education-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .education-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Materials Section */
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .material-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .material-card:hover {
+            transform: scale(1.02);
+        }
+
+        .material-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .material-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .material-content {
+            padding: 1.5rem;
+        }
+
+        .material-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .material-content li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .material-content li:hover {
+            color: var(--primary-color);
+            padding-left: 10px;
+        }
+
+        .material-content li:last-child {
+            border-bottom: none;
+        }
+
+        #materi {
+  text-align: center; /* membuat isi teks di tengah */
+}
+
+#materi p {
+  max-width: 700px;   /* batasi lebar paragraf agar tidak terlalu panjang */
+  margin: 0 auto;     /* agar posisi paragraf tetap di tengah */
+  line-height: 1.6;   /* jarak antarbaris agar mudah dibaca */
+  text-align: center; /* pastikan isi teks tetap rata tengah */
+}
+
+        /* Assignments Section */
+        .assignments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .assignment-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .assignment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .assignment-card:hover::before {
+            left: 100%;
+        }
+
+        .assignment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .assignment-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .assignment-title {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .assignment-desc {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .assignment-link {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .assignment-link:hover {
+            transform: translateX(5px);
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-text {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-white);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: var(--shadow);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .scroll-top.show {
+            display: flex;
+            animation: bounceIn 0.5s ease;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Copy Link Button */
+        .copy-link-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .copy-link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .copy-link-btn.copied {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+        }
+
+        /* Website Link Button - Special Style */
+        .copy-website-btn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem auto;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .copy-website-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(240, 147, 251, 0.6);
+        }
+
+        .copy-website-btn.copied {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-white);
+            color: var(--text-dark);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .toast.info {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+        }
+
+        /* QR Code Modal */
+        .qr-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-modal.active {
+            display: flex;
+        }
+
+        .qr-content {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .qr-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            margin: 1rem auto;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-url {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: var(--bg-light);
+            border-radius: 5px;
+            word-break: break-all;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .qr-close {
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .qr-close:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--bg-white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--shadow);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            #home {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .home-image {
+                order: -1;
+            }
+
+            .profile-img {
+                max-width: 300px;
+                height: 300px;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .copy-website-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(102, 126, 234, 0.3);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-circle"></div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">SAZ</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#pendidikan" class="nav-link">Pendidikan</a></li>
+                <li><a href="#materi" class="nav-link">Materi</a></li>
+                <li><a href="#tugas" class="nav-link">Tugas</a></li>
+                <li><a href="#galeri" class="nav-link">Galeri</a></li>
+                <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+        <div class="section-content">
+            <div class="home-text">
+                <h3>Halo, Saya</h3>
+                <h1>Salma Aulia Zahrani</h1>
+                <p>Siswa di <strong>SMA Negeri 1 Kota Mojokerto</strong> dengan jurusan IPA Informatika. Saya memiliki passion dalam teknologi dan pengembangan web.</p>
+                <p><i class="fas fa-map-marker-alt"></i> Alamat: Sinoman GG 5 No 49, Mojokerto</p>
+                <p><i class="fas fa-graduation-cap"></i> Jurusan: IPA Informatika</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                </div>
+                
+                <!-- Website Link Button -->
+                <button class="copy-website-btn" id="copyWebsiteLink">
+                    <i class="fas fa-globe"></i> Salin Link Website
+                </button>
+                
+                <div class="button-container">
+                    <button class="copy-link-btn" id="copyHomeLink">
+                        <i class="fas fa-link"></i> Salin Link Halaman Ini
+                    </button>
+                    <button class="copy-link-btn" id="showQRCode">
+                        <i class="fas fa-qrcode"></i> Tampilkan QR Code
+                    </button>
+                </div>
+            </div>
+            <div class="home-image">
+                <div class="profile-img-container">
+                    <img src="https://z-cdn-media.chatglm.cn/files/36b2e3c7-b8c7-465f-9175-a7a0cedb4884_ZAHRA.jpg?auth_key=1792510465-0b0a8259eee84db0b1b75384187c8532-0-f33e11fb4b6d8d271de8f6472c11d3f9" alt="Salma Aulia Zahrani" class="profile-img">
+                </div>
+            </div>
+        </div>
+    </section>
+<section id="pendidikan">
+    <h2>PENDIDIKAN</h2>
+    <div class="edu-container">
+        <div class="edu-card">
+            <h3>SMA Negeri 1 Kota Mojokerto</h3>
+            <p><strong>Periode:</strong> 2022 – Sekarang</p>
+            <p><strong>Program:</strong> Ilmu Pengetahuan Alam (IPA)</p>
+            <p>Saya bersekolah di <b>SMA Negeri 1 Kota Mojokerto</b>, salah satu sekolah unggulan di Jawa Timur yang berfokus pada pembentukan karakter, prestasi akademik, dan pengembangan potensi siswa di berbagai bidang. 
+            Di sini saya mempelajari berbagai mata pelajaran seperti Matematika, Fisika, Kimia, Bahasa Inggris, dll serta aktif dalam kegiatan ekstrakurikuler sekolah. <b>Adiwiyata Sekolah Hijau</b>.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Tambahkan ini di bagian <style> kamu */
+#pendidikan {
+    padding: 50px;
+    text-align: left;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+#pendidikan h2 {
+    font-size: 2em;
+    color: #004d99;
+    border-left: 5px solid #004d99;
+    padding-left: 10px;
+    margin-bottom: 30px;
+}
+
+.edu-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.edu-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    line-height: 1.7;
+}
+
+.edu-card h3 {
+    color: #004d99;
+    margin-top: 0;
+}
+
+.edu-card ul {
+    margin-top: 10px;
+}
+s<di<!-- MATERI -->s
+</style>
+    <section id="materi" class="fade-in">
+      <h2>MATERI</h2>
+      <p>Saya telah mempelajari dasar-dasar <b>HTML</b> dan <b>CSS</b> untuk membangun website.  
+      Sumber belajar utama: <a href="https://www.petanikode.com/" target="_blank">Petani Kode</a>.</p>
+    </section>
+
+ <h2>Tugas Praktikum</h2>
+    <!-- Assignments Section -->
+    <section id="tugas">
+     v class="section-content">
+           
+               <div class="assignments-grid">
+                <div class="assignment-card">
+                    <div class="assignment-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="assignment-title">Tugas 1: Materi list</h3>
+                    <p class="assignment-desc">Membuat website pribadi yang menampilkan profil, pendidikan, dan portofolio dengan desain responsif dan menarik.</p>
+                    <a href="tugas1.html">Lihat Detail →</a>
+                </div>
+                <div class="assignment-card">
+                    <div class="assignment-icon"><i class="fas fa-link"></i></div>
+                    <h3 class="assignment-title">Tugas 2: Tugas Form</h3>
+                    <p class="assignment-desc">Membuat halaman pengumpulan tugas dengan form yang dapat digunakan untuk mengumpulkan berbagai jenis tugas.</p>
+                    <a href="tugas2.html">Lihat Detail →</a>
+                </div>
+                <div class="assignment-card">
+                    <div class="assignment-icon"><i class="fas fa-microchip"></i></div>
+                    <h3 class="assignment-title">Tugas 3: Tugas Tabel</h3>
+                    <p class="assignment-desc">Membuat proyek Arduino sederhana dengan sensor dan aktuator yang dapat dikontrol melalui web interface.</p>
+                    <a href="tabel.html">Lihat Detail →</a>
+                </div>
+            </div>
+            <button class="copy-link-btn" id="copyAssignmentsLink">
+                <i class="fas fa-link"></i> Salin Link Halaman Ini
+            </button>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="galeri">
+        <div class="section-content">
+            <h2>Galeri Dokumentasi</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/gallery1/800/800')">
+                    <img src="https://picsum.photos/seed/gallery1/400/400" alt="Gallery 1">
+                    <div class="gallery-overlay">
+                        <span class="gallery-text">Kegiatan Kelas</span>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/gallery2/800/800')">
+                    <img src="https://picsum.photos/seed/gallery2/400/400" alt="Gallery 2">
+                    <div class="gallery-overlay">
+                        <span class="gallery-text">Presentasi Project</span>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/gallery3/800/800')">
+                    <img src="https://picsum.photos/seed/gallery3/400/400" alt="Gallery 3">
+                    <div class="gallery-overlay">
+                        <span class="gallery-text">Workshop Programming</span>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/gallery4/800/800')">
+                    <img src="https://picsum.photos/seed/gallery4/400/400" alt="Gallery 4">
+                    <div class="gallery-overlay">
+                        <span class="gallery-text">Arduino Project</span>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/gallery5/800/800')">
+                    <img src="https://picsum.photos/seed/gallery5/400/400" alt="Gallery 5">
+                    <div class="gallery-overlay">
+                        <span class="gallery-text">Study Tour IT</span>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox('https://picsum.photos/seed/gallery6/800/800')">
+                    <img src="https://picsum.photos/seed/gallery6/400/400" alt="Gallery 6">
+                    <div class="gallery-overlay">
+                        <span class="gallery-text">Web Development</span>
+                    </div>
+                </div>
+            </div>
+            <button class="copy-link-btn" id="copyGalleryLink">
+                <i class="fas fa-link"></i> Salin Link Halaman Ini
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#pendidikan">Pendidikan</a>
+                <a href="#materi">Materi</a>
+                <a href="#tugas">Tugas</a>
+                <a href="#galeri">Galeri</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Salma Aulia Zahrani. All Rights Reserved. Made with <i class="fas fa-heart" style="color: red;"></i> and Code</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <img id="lightbox-img" src="" alt="Lightbox Image">
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div class="qr-modal" id="qrModal">
+        <div class="qr-content">
+            <h3 class="qr-title">QR Code Website</h3>
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://salmaaulia.github.io" alt="QR Code">
+            </div>
+            <div class="qr-url" id="qrUrl">https://salmaaulia.github.io</div>
+            <button class="qr-close" onclick="closeQRModal()">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Link berhasil disalin!</span>
+    </div>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Lightbox
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                closeQRModal();
+            }
+        });
+
+        // Close lightbox on background click
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeLightbox();
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Active navigation highlighting
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Add typing effect to home title
+        const title = document.querySelector('#home h1');
+        const text = title.textContent;
+        title.textContent = '';
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                title.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        setTimeout(typeWriter, 1500);
+
+        // Parallax effect for background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const bgAnimation = document.querySelector('.bg-animation');
+            bgAnimation.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+
+        // Copy Website Link Functionality
+        function copyWebsiteLink() {
+            const url = window.location.origin + window.location.pathname;
+            
+            // Create a temporary input element to copy the URL
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Show toast notification
+            showToast('Link website berhasil disalin!', 'success');
+            
+            // Update button state
+            const button = document.getElementById('copyWebsiteLink');
+            button.classList.add('copied');
+            button.innerHTML = '<i class="fas fa-check"></i> Link Website Tersalin!';
+            
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = '<i class="fas fa-globe"></i> Salin Link Website';
+            }, 3000);
+        }
+
+        // Copy Section Link Functionality
+        function copyLink(sectionId) {
+            const url = window.location.origin + window.location.pathname + '#' + sectionId;
+            
+            // Create a temporary input element to copy the URL
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Show toast notification
+            showToast('Link halaman berhasil disalin!', 'success');
+            
+            // Update button state
+            const button = document.getElementById('copy' + sectionId.charAt(0).toUpperCase() + sectionId.slice(1) + 'Link');
+            if (button) {
+                button.classList.add('copied');
+                button.innerHTML = '<i class="fas fa-check"></i> Link Tersalin!';
+                
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    button.innerHTML = '<i class="fas fa-link"></i> Salin Link Halaman Ini';
+                }, 3000);
+            }
+        }
+
+        // Show QR Code Modal
+        function showQRCode() {
+            const modal = document.getElementById('qrModal');
+            const qrUrl = document.getElementById('qrUrl');
+            const url = window.location.origin + window.location.pathname;
+            
+            // Update QR code with current URL
+            const qrImg = modal.querySelector('.qr-code img');
+            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(url)}`;
+            qrUrl.textContent = url;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close QR Modal
+        function closeQRModal() {
+            const modal = document.getElementById('qrModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = 'toast show ' + type;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add event listeners to copy buttons
+        document.getElementById('copyWebsiteLink').addEventListener('click', copyWebsiteLink);
+        document.getElementById('copyHomeLink').addEventListener('click', () => copyLink('home'));
+        document.getElementById('copyEducationLink').addEventListener('click', () => copyLink('pendidikan'));
+        document.getElementById('copyMaterialsLink').addEventListener('click', () => copyLink('materi'));
+        document.getElementById('copyAssignmentsLink').addEventListener('click', () => copyLink('tugas'));
+        document.getElementById('copyGalleryLink').addEventListener('click', () => copyLink('galeri'));
+        document.getElementById('showQRCode').addEventListener('click', showQRCode);
+
+        // Close QR modal on background click
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeQRModal();
+            }
+        });
+
+        // Handle direct navigation to sections from URL hash
+        function handleHashNavigation() {
+            const hash = window.location.hash;
+            if (hash) {
+                const target = document.querySelector(hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 500);
+                }
+            }
+        }
+
+        // Check for hash on page load
+        window.addEventListener('load', handleHashNavigation);
+        
+        // Update URL when scrolling to sections
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            if (current && window.location.hash !== '#' + current) {
+                history.replaceState(null, null, '#' + current);
+            }
+        });
+
+        // Add share functionality
+        function shareWebsite() {
+            const url = window.location.origin + window.location.pathname;
+            const title = 'Salma Aulia Zahrani - Personal Website';
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    url: url
+                }).then(() => {
+                    showToast('Website berhasil dibagikan!', 'success');
+                }).catch(() => {
+                    copyWebsiteLink();
+                });
+            } else {
+                copyWebsiteLink();
+            }
+        }
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + C to copy current page link
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c' && !window.getSelection().toString()) {
+                e.preventDefault();
+                copyWebsiteLink();
+            }
+            
+            // Ctrl/Cmd + Shift + C to copy section link
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                if (current) {
+                    copyLink(current);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
